@@ -39,10 +39,22 @@
 .modal:has(.modal-photo[src*="monipool"]) .modal-photo{width:100%;height:100%;max-height:74vh;object-fit:contain;filter:none}
 @media(max-width:820px){.modal:has(.modal-photo[src*="monipool"]) .modal-photo-area{min-height:370px}.modal:has(.modal-photo[src*="monipool"]) .main-photo-area{min-height:330px}}
  .sold-label{position:absolute;top:12px;right:12px;background:#762b28;color:white;padding:7px 12px;border-radius:8px;font-size:12px;font-weight:800;letter-spacing:.08em;z-index:2}
+
+/* Encabezado: numeración de artículos y acceso directo por N.º */
+.header-jump{display:flex;align-items:center;gap:6px;border:1px solid #ddd8ce;background:#fff;border-radius:12px;padding:4px 5px 4px 9px;white-space:nowrap}
+.header-jump label{font-size:11px;font-weight:800;color:#384c3e}
+.header-jump input{appearance:textfield;-moz-appearance:textfield;width:58px;min-width:0;background:#f8f7f3;border:1px solid #dedbd4;border-radius:7px;padding:7px 5px;color:var(--ink);font-size:12px;text-align:center}
+.header-jump input::-webkit-outer-spin-button,.header-jump input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.header-jump button{border:0;background:#244334;color:#fff;border-radius:7px;font-size:11px;font-weight:850;padding:8px 10px;line-height:1}
+.header-jump button:hover{background:#345c46}
+.header-right{gap:13px}
+@media(max-width:1040px){.header-jump label{display:none}.header-right{gap:9px}}
+@media(max-width:760px){.header-link{display:none}.header-jump{padding:3px 4px}.header-jump input{width:49px}.header-jump button{padding:8px 7px}.topbar-in{gap:8px}.brand{gap:8px}.brand-sub{font-size:9px}}
+@media(max-width:390px){.brand-mark{display:none}.brand-name{font-size:11px}.brand-sub{font-size:8px}.header-jump input{width:42px}.selection-toggle{padding:8px 10px}}
 </style>
 </head>
 <body>
-<header class="topbar"><div class="shell topbar-in"><a href="#inicio" class="brand" aria-label="Ir al inicio del catálogo"><div class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="brand-info"><span class="brand-name">CIERRE DE NEGOCIO</span><span class="brand-sub">Equipamiento de hotel</span></div></a><div class="header-right"><a class="header-link" href="#catalogo">Explorar artículos</a><a class="header-link" href="#como-consultar">Cómo consultar</a><button class="selection-toggle" id="openDrawer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 5 2 1 1.7 10H19l2-8H6.5"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg><span class="mobilehide">Mi selección</span><span class="count-tag" id="savedCount">0</span></button></div></div></header>
+<header class="topbar"><div class="shell topbar-in"><a href="#inicio" class="brand" aria-label="Ir al inicio del catálogo"><div class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="brand-info"><span class="brand-name">CIERRE DE NEGOCIO</span><span class="brand-sub">Equipamiento de hotel · <span id="headerProductCount">Artículos</span></span></div></a><div class="header-right"><form id="headerJumpForm" class="header-jump" role="search" aria-label="Buscar producto por número"><label for="headerItemNumber">Artículo N.º</label><input id="headerItemNumber" type="number" inputmode="numeric" pattern="[0-9]*" min="1" placeholder="001" aria-label="Número de artículo" required><button type="submit" aria-label="Ir al artículo indicado">Ir</button></form><a class="header-link" href="#catalogo">Explorar artículos</a><a class="header-link" href="#como-consultar">Cómo consultar</a><button class="selection-toggle" id="openDrawer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 5 2 1 1.7 10H19l2-8H6.5"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg><span class="mobilehide">Mi selección</span><span class="count-tag" id="savedCount">0</span></button></div></div></header>
 <main id="inicio">
 <section class="hero"><div class="shell hero-in"><div class="hero-copy"><p class="eyebrow">Venta de equipamiento completo de hotel</p><h1>Cierre de negocio. <em>Entregamos el 8 de diciembre.</em></h1><p class="hero-desc">Venta de camas, muebles, mesas, arte, iluminación y equipamiento de hotel por cierre de negocio. Entrega: 8 de diciembre. Encontrá cada artículo por su número y consultalo por WhatsApp. Precios de liquidación y ofertas por lote.</p><div class="hero-actions"><a href="#catalogo" class="primary-btn">Explorar catálogo <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 14 0m-6-6 6 6-6 6"/></svg></a><span class="hero-foot"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg> Entregamos el 8 de diciembre</span></div></div><div class="hero-visual" aria-hidden="true"><img class="hero-photo photo-main" src="assets/foto-001.webp" alt=""><img class="hero-photo photo-small" src="assets/foto-002.webp" alt=""><img class="hero-photo photo-right" src="assets/foto-003.webp" alt=""><div class="hero-sticker">CIERRE DE<br>NEGOCIO<br>ENTREGA<br>08 DIC.</div></div></div></section>
 <div class="shell"><div class="stats"><div class="stat"><strong id="statItems">64</strong><span>artículos y conjuntos</span></div><div class="stat"><strong id="statPhotos">83</strong><span>fotografías</span></div><div class="stat"><strong id="statCats">9</strong><span>categorías</span></div></div><section class="pool-feature shell" aria-labelledby="poolTitle"><div class="pool-photo"><span class="pool-chip">OFERTA ESPECIAL · H-064</span></div><div class="pool-content"><div class="section-kicker">Destacado · Entrega 8 de diciembre</div><h2 class="serif" id="poolTitle">Moni Pool <em>para exterior</em></h2><p>Minipiscina blanca instalada en terraza. Venta por cierre de negocio. Desmontaje y traslado a coordinar.</p><span class="pool-price">$ 3.900.000</span><div class="pool-conditions"><span>Pago en cuotas a coordinar</span><span>Escuchamos ofertas</span></div><div class="pool-feature-actions"><button id="poolFeatureBtn" type="button" class="primary-btn">Ver fotos y detalles</button><a class="pool-wa" href="https://wa.me/5492615996913?text=Hola%2C%20me%20interesa%20la%20Moni%20Pool%20H-064%20publicada%20a%20%243.900.000.%20Quisiera%20consultar%20por%20las%20cuotas%20y%20hacer%20una%20oferta." target="_blank" rel="noopener noreferrer">Me interesa por WhatsApp</a></div></div></section><div class="intro" id="catalogo"><div><div class="section-kicker">Inventario disponible</div><h2>Explorá el catálogo</h2><p class="liquidation-note">Precios económicos en pesos argentinos · Escuchamos ofertas por varios artículos</p></div><p>Elegí una categoría o buscá por artículo, palabra clave o código. Tocá una foto para ver todas sus vistas.</p></div></div>
@@ -120,10 +132,17 @@ next.forEach(([name,price,category,description,nums])=>{id++;a.push({id,code:'H-
   const whatsappUrl=p=>whatsappBase+encodeURIComponent(`Hola, me interesa el artículo ${p.code} — ${p.name} publicado a ${displayPrice(p)}. ¿Podrían confirmar disponibilidad, estado y condiciones?${p.id===64?' También quisiera saber las cuotas disponibles y hacer una oferta.':''}`);
   const whatsappListUrl=items=>whatsappBase+encodeURIComponent('Hola, me interesan estos artículos del catálogo de equipamiento de hotel:\n\n'+items.map(p=>`${p.code} — ${p.name}`).join('\n')+'\n\n¿Podrían indicarme su disponibilidad?');
   function money(n){return n===0?'GRATIS':'$ '+new Intl.NumberFormat('es-AR',{maximumFractionDigits:0}).format(n);}
+  function displayPrice(p){
+    if(p.sold) return 'VENDIDO';
+    if(p.price===null||p.price===undefined||p.priceLabel==='Consultar precio')return 'CONSULTAR';
+    return money(p.price);
+  }
   const photos = all.reduce((s,x)=>s+x.images.length,0);
   let category='Todas',query='',sort='number',current=null,photoIndex=0,toastTimer;
   let saved=[];try {const local=JSON.parse(localStorage.getItem('hotel_catalog_selection_v1')||'[]');if(Array.isArray(local))saved=local.filter(id=>all.some(p=>p.id===id));}catch(_){}
   $('statItems').textContent=all.length;$('statPhotos').textContent=photos;$('statCats').textContent=catOrder.length;
+  $('headerProductCount').textContent=all.length+' artículos';
+  $('headerItemNumber').max=String(Math.max(...all.map(p=>p.id)));
   function save(){try{localStorage.setItem('hotel_catalog_selection_v1',JSON.stringify(saved));}catch(_){};$('savedCount').textContent=saved.length;}
   function toast(msg){clearTimeout(toastTimer);const b=$('toast');b.textContent=msg;b.classList.add('show');toastTimer=setTimeout(()=>b.classList.remove('show'),2600);}
   async function copyText(text){try {if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);toast('Copiado al portapapeles');return;}}catch(_){}
@@ -153,6 +172,13 @@ next.forEach(([name,price,category,description,nums])=>{id++;a.push({id,code:'H-
   }
   function openDrawer(){renderDrawer();$('drawerBackdrop').classList.add('open');document.body.classList.add('locked');$('closeDrawer').focus();}
   function closeDrawer(){if(!$('drawerBackdrop').classList.contains('open'))return;$('drawerBackdrop').classList.remove('open');if($('detailOverlay').hidden)document.body.classList.remove('locked');}
+  $('headerJumpForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const id=Number($('headerItemNumber').value);
+    const p=all.find(x=>x.id===id);
+    if(!p){toast('No existe un producto con ese número');$('headerItemNumber').focus();return;}
+    openDetail(p);
+  });
   $('searchInput').addEventListener('input',e=>{query=e.target.value;$('clearInput').style.display=query?'grid':'none';render();});$('sortSelect').addEventListener('change',e=>{sort=e.target.value;render();});
   function reset(){category='Todas';query='';$('searchInput').value='';$('clearInput').style.display='none';render();}
   $('clearInput').onclick=()=>{$('searchInput').value='';query='';$('clearInput').style.display='none';render();$('searchInput').focus();};$('resetFilters').onclick=reset;$('emptyReset').onclick=reset;
