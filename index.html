@@ -117,6 +117,56 @@ next.forEach(([name,price,category,description,nums])=>{id++;a.push({id,code:'H-
 })();
 </script>
 <script>
+/* Correcciones de productos y duplicados - noviembre 2026 */
+(()=>{
+  const all=window.CATALOG_DATA;
+  const get=id=>all.find(p=>p.id===id);
+  const edit=(id,props)=>{const p=get(id);if(p)Object.assign(p,props);};
+  const img=n=>'assets/documento/foto-'+String(n).padStart(2,'0')+'.webp';
+  const foto=(id,nums)=>edit(id,{images:nums.map(img),original_photo_numbers:nums,photoPending:false,photoOrigin:'documento'});
+  // Sommiers: una plaza, una plaza con respaldo y tamaño Queen.
+  edit(1,{name:'Sommier de una plaza con colchón',price:100000,description:'Sommier individual de una plaza con colchón, vestido en ropa blanca. No incluye respaldo.',priceLabel:'Precio actualizado',priceNote:'Precio por sommier y colchón de una plaza.'});
+  edit(2,{name:'Sommier de una plaza con respaldo y colchón',price:120000,description:'Sommier individual con colchón y respaldo de madera oscura.',priceLabel:'Precio actualizado',priceNote:'Precio por unidad, con respaldo y colchón.'});
+  const queen={
+    3:'Sommier Queen con respaldo de madera y almohadones azules',
+    4:'Sommier Queen con respaldo tapizado y almohadones claros',
+    5:'Sommier Queen con respaldo y almohadones mostaza',
+    6:'Sommier Queen con respaldo y detalles amarillos',
+    7:'Sommier Queen con respaldo de madera y detalles bordó'
+  };
+  for(const [id,name] of Object.entries(queen))edit(+id,{name,price:220000,priceLabel:'Precio actualizado',description:'Sommier tamaño Queen con colchón. Fotografía ambientada con almohadones y respaldo; confirmar accesorios incluidos.',priceNote:'Sommier Queen con colchón: $220.000. Confirmar si incluye respaldo y textiles.'});
+  // La ficha que decía sofá describe un sommier vestido como sofá.
+  edit(20,{name:'Sommier vestido como sofá',category:'Habitaciones y descanso',description:'Sommier acondicionado y vestido con funda marrón, cojines y almohadones, presentado como sofá. Consultar qué accesorios incluye.',keywords:'sommier somier vestido sofá sofa marrón almohadones'});
+  // Lámparas de sal y espejos.
+  edit(24,{name:'Lámpara de sal con varillas de madera',price:25000,description:'Lámpara de sal iluminada, con estructura decorativa de varillas de madera.',priceLabel:'Precio actualizado',priceNote:'Precio por lámpara de sal.'});
+  [58,59].forEach(id=>edit(id,{price:25000,priceLabel:'Precio actualizado',priceNote:'Precio por espejo: $25.000.'}));
+  edit(59,{name:'Espejo con marco tipo mimbre',description:'Espejo rectangular de marco marrón trabajado, estilo mimbre.',keywords:'espejo mimbre ratan ratán decorativo marco'});
+  // Corregir fichas mal identificadas: eran fotos de muebles, no bicicletas o licuadoras.
+  edit(67,{name:'Juego de comedor de madera maciza con 4 sillas',price:99000,category:'Mesas y sillas',description:'Juego de comedor de madera maciza: mesa rectangular y cuatro sillas de madera. Se vende el conjunto.',keywords:'mesa sillas comedor madera maciza juego cuatro',priceLabel:'Precio actualizado',priceNote:'Precio por mesa y cuatro sillas.'});
+  foto(67,[15]);
+  edit(68,{name:'Mesa negra de melamina',price:30000,category:'Mesas y sillas',description:'Mesa de melamina negra de estructura metálica, con superficie rectangular.',keywords:'mesa negra melamina comedor',priceLabel:'Precio actualizado',priceNote:'Precio por mesa.'});
+  foto(68,[16]);
+  edit(69,{name:'Par de sillones con patas de acero',price:99000,category:'Recepción y espacios comunes',description:'Dos sillones tapizados color claro con estructura metálica y patas de acero.',keywords:'sillones par patas de acero muebles',priceLabel:'Precio actualizado',priceNote:'Precio por los dos sillones.'});
+  foto(69,[17]);
+  edit(70,{name:'Mesa auxiliar con ruedas',price:25000,category:'Mesas y sillas',description:'Mesa auxiliar negra con estructura metálica, superficie de apoyo y ruedas para desplazarla.',keywords:'mesa móvil ruedas auxiliar carro',priceLabel:'Precio actualizado',priceNote:'Mesa con ruedas: $25.000.'});
+  foto(70,[18]);
+  // Soldadora y bicicletas, cada una con la fotografía de su propio artículo.
+  edit(66,{name:'Soldadora inverter ESAB Rogue 200A',price:490000,category:'Herramientas y hogar',description:'Soldadora inverter ESAB Rogue 200A MMA/TIG de 200 A, usada y de poco uso. Incluye máscara fotosensible de regalo.',priceLabel:'Precio actualizado',priceNote:'$490.000 con máscara de regalo.'});
+  foto(66,[2]);
+  edit(79,{name:'Licuadora gastronómica Metvisa de 4 litros',price:199000,category:'Equipamiento gastronómico',description:'Licuadora industrial Metvisa de cuatro litros y vaso de acero inoxidable. Usada, de poco uso; consultar funcionamiento.',priceLabel:'Precio publicado'});
+  foto(79,[3]);
+  edit(81,{name:'Bicicleta Zion Strix GT 2.0',price:890000,category:'Bicicletas y deporte',description:'Bicicleta Zion Strix GT 2.0 rodado 29, frenos a disco, cuadro de aluminio y transmisión Shimano de 21 velocidades.',priceNote:'Bicicleta Zion; foto del artículo.'});
+  foto(81,[5]);
+  edit(82,{name:'Bicicleta Zion Aspro R29',price:380000,category:'Bicicletas y deporte',description:'Bicicleta Zion Aspro rodado 29, suspensión delantera, frenos a disco y 21 velocidades.',priceNote:'Bicicleta Zion; foto del artículo.'});
+  foto(82,[6]);
+  // La importación histórica creó dos veces otros siete artículos y la soldadora.
+  const repeated=new Set([78,83,84,85,86,87,88,89]);
+  for(let i=all.length-1;i>=0;i--){if(repeated.has(all[i].id))all.splice(i,1);}
+  // Quitar cualquier publicación explícita de King (no corresponde a la oferta actual).
+  for(let i=all.length-1;i>=0;i--){if(/\bking(?:\s*size)?\b/i.test(all[i].name||''))all.splice(i,1);}
+})();
+</script>
+<script>
 (() => {
   'use strict';
   const all = window.CATALOG_DATA || [];
